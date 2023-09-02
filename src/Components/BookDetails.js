@@ -87,12 +87,6 @@ function BookDetails({ books }) {
           >
             Book's Year : {book.Year}
           </div>
-          <div
-            style={{ fontSize: "20px", textAlign: "center" }}
-            className="book-card__author"
-          >
-            Book's Page Count : {book.Pages}
-          </div>
           <hr></hr>
           <div class="d-flex align-items-center justify-content-center">
             <div class="container">
