@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { toggleFavorite } from "../Utils/FavoriteUtils";
 import { Link } from "react-router-dom";
+import { toggleCard } from "../Utils/CardUtils";
+import { ToastContainer, toast } from 'react-toastify';
+
 import {
   Books,
   CurrentSetter,
@@ -17,6 +20,7 @@ export default function Favorites(props) {
   // setFavorite(props.favorites)
   return (
     <div style={{ margin: "50px" }}>
+      <ToastContainer></ToastContainer>
       {props.favorites.map((book, index) => (
         <div key={index} style={{ display: "inline-block" }} class="artboard">
           <div class="card">
@@ -60,6 +64,30 @@ export default function Favorites(props) {
                       Favorite Delete
                     </button>
                   </li>
+                  <li>
+                    <button
+                      style={{ textAlign: "center", margin: "auto" }}
+                      onClick={() =>
+                        toggleCard(
+                          book,
+                          props.cards,
+                          props.setCards
+                        )
+                      }
+                      className={`btn btn-primary ${props.cards.some(
+                        (card) => card.Title === book.Title
+                      )
+                        ? "active-button2"
+                        : ""
+                        }`}
+                    >
+                      {props.cards.some(
+                        (card) => card.Title === book.Title
+                      )
+                        ? `Remove From Card`
+                        : "Add To Card"}
+                    </button>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -67,7 +95,7 @@ export default function Favorites(props) {
             <div class="card__side card__side--front">
               <Link to={`/book/${book.Id}`}>
                 <img
-                  style={{ width: "100%", height: "450px" }}
+                  style={{ width: "100%", height: "550px" }}
                   src={book.CoverUrl}
                 ></img>
               </Link>

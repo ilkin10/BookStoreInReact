@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./../App.css";
 import "./../BookList.css";
-
+import { ToastContainer, toast } from 'react-toastify';
 import { toggleFavorite } from "../Utils/FavoriteUtils";
+import { toggleCard } from "../Utils/CardUtils";
 import { Link } from "react-router-dom";
 import {
   Books,
@@ -15,7 +16,8 @@ export default function BookList(props) {
   SetBooks(props.books);
   SetSetter(setBook);
   return (
-    <div style={{ margin: "50px" }}>
+    <div>
+      <ToastContainer />
       {props.books.map((book, index) => (
         <div key={index} style={{ display: "inline-block" }} class="artboard">
           <div class="card">
@@ -55,19 +57,42 @@ export default function BookList(props) {
                           props.setFavorites
                         )
                       }
-                      className={`btn btn-primary ${
-                        props.favorites.some(
-                          (favoriteBook) => favoriteBook.Title === book.Title
-                        )
-                          ? "active-button"
-                          : ""
-                      }`}
+                      className={`btn btn-primary ${props.favorites.some(
+                        (favoriteBook) => favoriteBook.Title === book.Title
+                      )
+                        ? "active-button"
+                        : ""
+                        }`}
                     >
                       {props.favorites.some(
                         (favoriteBook) => favoriteBook.Title === book.Title
                       )
                         ? `Favorite Delete`
                         : "Favorite Add"}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      style={{ textAlign: "center", margin: "auto" }}
+                      onClick={() =>
+                        toggleCard(
+                          book,
+                          props.cards,
+                          props.setCards
+                        )
+                      }
+                      className={`btn btn-primary ${props.cards.some(
+                        (card) => card.Title === book.Title
+                      )
+                        ? "active-button2"
+                        : ""
+                        }`}
+                    >
+                      {props.cards.some(
+                        (card) => card.Title === book.Title
+                      )
+                        ? `Remove From Card`
+                        : "Add To Card"}
                     </button>
                   </li>
                 </ul>
@@ -77,7 +102,7 @@ export default function BookList(props) {
             <div class="card__side card__side--front">
               <Link to={`/book/${book.Id}`}>
                 <img
-                  style={{ width: "100%", height: "450px" }}
+                  style={{ width: "100%", height: "550px" }}
                   src={book.CoverUrl}
                 ></img>
               </Link>

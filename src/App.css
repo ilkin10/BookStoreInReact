@@ -43,6 +43,11 @@ button.active-button {
   border:#ff0000;
 }
 
+button.active-button2 {
+  background-color: green; /* Change this to the desired background color */
+  border:green;
+}
+
 .container {
   margin: 0 auto;
   max-width: 910px;

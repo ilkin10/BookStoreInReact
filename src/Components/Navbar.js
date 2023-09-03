@@ -9,6 +9,8 @@ export default function Navbar(props) {
             <a className="navbar-brand" style={{color:'deepskyblue',marginLeft:'5%'}} href='/'>Welcome To STEP BOOK Library</a>
             <Link style={{textDecoration:'none',color:'black'}} to="/">Home</Link>
             <Link style={{textDecoration:'none',color:'black'}} to="/favorites">Favorites</Link>
+            <Link style={{textDecoration:'none',color:'black'}} to="/cards">Your Added Books To Card</Link>
+
             <form style={{marginRight:'5%'}} onSubmit={(e)=>e.preventDefault()} className="form-inline">
                 <div className="input-group">
                     <input onChange={(e)=>props.setInput(e.target.value)} className="form-control" type="search" placeholder="Search" aria-label="Search" id='input' />

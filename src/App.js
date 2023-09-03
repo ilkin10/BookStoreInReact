@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BookList from "./Components/BookList";
 import Favorites from "./Components/Favorites";
+import Cards from "./Components/Cards";
+
 import BookDetails from "./Components/BookDetails";
 import { filterBooks } from "./Utils/NavbarUtil";
 
@@ -12,6 +14,8 @@ function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
+  const [cards, setCards] = useState([]);
+
   const location = useRef("");
   const [inputedText, setInputedText] = useState("");
 
@@ -37,6 +41,12 @@ function App() {
       setFavorites(JSON.parse(favoriteBooks));
     }
   }, []);
+  useEffect(() => {
+    const cardBooks = Cookies.get("cardBooks");
+    if (cardBooks) {
+      setFavorites(JSON.parse(cardBooks));
+    }
+  }, []);
 
   return (
     <div>
@@ -57,6 +67,8 @@ function App() {
                 <BookList
                   books={books}
                   favorites={favorites}
+                  cards={cards}
+                  setCards={setCards}
                   setFavorites={setFavorites}
                 />
               ) : (
@@ -64,6 +76,8 @@ function App() {
                   books={filterBooks(books, inputedText)}
                   favorites={favorites}
                   setFavorites={setFavorites}
+                  cards={cards}
+                  setCards={setCards}
                 />
               )
             }
@@ -85,15 +99,35 @@ function App() {
             path="/favorites"
             element={
               inputedText === "" ? (
-                <Favorites favorites={favorites} setFavorites={setFavorites} />
+                <Favorites favorites={favorites}    cards={cards}
+                setCards={setCards} setFavorites={setFavorites} />
               ) : (
                 <Favorites
+                  favorites={filterBooks(favorites, inputedText)}
+                  setFavorites={setFavorites}    cards={filterBooks(cards, inputedText)}
+                  setCards={setCards}
+                />
+              )
+            }
+          />
+
+<Route
+            exact
+            path="/cards"
+            element={
+              inputedText === "" ? (
+                <Cards cards={cards} favorites={favorites} setFavorites={setFavorites} setCards={setCards} />
+              ) : (
+                <Cards
+                  cards={filterBooks(cards, inputedText)}
+                  setCards={setCards}
                   favorites={filterBooks(favorites, inputedText)}
                   setFavorites={setFavorites}
                 />
               )
             }
           />
+
           <Route path="/book/:Id" element={<BookDetails books={books} />} />
         </Routes>
       </Router>

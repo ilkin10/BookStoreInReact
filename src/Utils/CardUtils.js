@@ -1,14 +1,14 @@
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export const toggleFavorite = (book,favorites,setFavorites) => {
-    const isFavorite = favorites.some((favoriteBook) => favoriteBook.Title === book.Title);
-    if (isFavorite) {
+export const toggleCard = (book,cards,setCards) => {
+    const isCard = cards.some((card) => card.Title === book.Title);
+    if (isCard) {
       // Favorilerden kaldır
-      const newFavorites = favorites.filter((favoriteBook) => favoriteBook.Title !== book.Title);
-      setFavorites(newFavorites);
-      Cookies.set('favoriteBooks', JSON.stringify(newFavorites));
-      toast('Removed From Favorites', {
+      const newcards = cards.filter((card) => card.Title !== book.Title);
+      setCards(newcards);
+      Cookies.set('cardBooks', JSON.stringify(newcards));
+      toast('Removed From Cards', {
         position: 'bottom-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -20,10 +20,10 @@ export const toggleFavorite = (book,favorites,setFavorites) => {
       });
     } else {
       // Favorilere ekle
-      const newFavorites = [...favorites, book];
-      setFavorites(newFavorites);
-      Cookies.set('favoriteBooks', JSON.stringify(newFavorites));
-      toast('Added To Favorites', {
+      const newcards = [...cards, book];
+      setCards(newcards);
+      Cookies.set('cardBooks', JSON.stringify(newcards));
+      toast('Added To Cards', {
         position: 'bottom-right',
         autoClose: 3000,
         hideProgressBar: false,
